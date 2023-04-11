@@ -3,7 +3,9 @@
     --color02: rgb(27, 27, 27);
     --background-color1: rgb(245, 245, 245);
     --height-01: 50px;
-    --height-02: 55px;
+    --navigationBarHeight: 55px;
+    --navigationButtonWidth: 80px;
+    --slideHeight: 500px;
 }
 
 *{
@@ -29,7 +31,7 @@ button, a:hover{
     position: fixed;
     display: flex;
     z-index: 20;
-    height: 55px;
+    height: var(--navigationBarHeight);
     width: 100%;
     background-color: var(--color02);
 }
@@ -59,7 +61,7 @@ button, a:hover{
 }
 
 .nav-link{
-    width: 80px;
+    width: var(--navigationButtonWidth);
 }
 
 .link{
@@ -79,20 +81,20 @@ button, a:hover{
 
 .mainWrapper{
     position: relative;
-    top: 55px;
+    top: var(--navigationBarHeight);
     grid-column: 1/-1;
     display: grid;
-    height: 500px;
+    height: var(--slideHeight);
     overflow-y: hidden;
 }
 
 .container{
     position: relative;
     z-index: 0 ;
-    top: -500px;
+    top: calc(-1 * var(--slideHeight));
     display: flex;
     width: 100%;
-    height: 500px;
+    height: var(--slideHeight);
     overflow: hidden;
 }
 
@@ -105,19 +107,11 @@ button, a:hover{
     transition: transform 0.3s ease-out;
 }
 
-.noTransition{
-    transition: none !important;
-}
-
-.widthChange{
-    width: 100%;
-}
-
 .box{
     color: white;
     font-size: 1.1rem;
     margin: 0;
-    height: 500px;
+    height: var(--slideHeight);
     background-color: var(--color01);
     display: flex;
     flex-direction: column;
@@ -134,7 +128,7 @@ button, a:hover{
 .button{
     border: 0;
     color: white;
-    padding : 10px 15px !important;
+    padding : 10px 15px;
     border-radius: 8px;
 }
 
@@ -180,7 +174,7 @@ button, a:hover{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    height: var(--slideHeight);
     width: 100px;
 }
 
@@ -199,7 +193,7 @@ button, a:hover{
     margin-right: unset;
     position: relative;
     right: 0;
-    top: -1000px
+    top: calc(-2 * var(--slideHeight))
 }
 
 .dots{
@@ -209,7 +203,7 @@ button, a:hover{
     width: fit-content;
     height: fit-content;
     position: relative;
-    top: -1030px;
+    top: calc( -2* var(--slideHeight) - 45px);
     display: flex;
     align-items: center;
     justify-content:center
@@ -218,7 +212,7 @@ button, a:hover{
 .dot{
     background-color: grey;
     width: 35px;
-    height: 3px;
+    height: 7px;
     margin: 0;
     margin-left: 3px;
     margin-right: 3px;
@@ -233,7 +227,7 @@ button, a:hover{
 }
 
 .linkTo{
-    margin-top: 55px;
+    margin-top: var(--navigationBarHeight);
     grid-column: 2/3;
     width: 100%;
     display: flex;
@@ -341,7 +335,7 @@ button, a:hover{
 
 }
 
-.writing > h1{
+.writing > h2{
     font-size: 2.5rem;
     margin-bottom: 5px;
 }
@@ -376,7 +370,7 @@ button, a:hover{
         display: inline-flex;
         justify-content: space-between;
         padding-right: 3%;
-        height: var(--height-02);
+        height: var(--navigationBarHeight);
         background-color: var(--color02);
         width: 100%;
         align-items: center;
@@ -393,8 +387,8 @@ button, a:hover{
         margin-right: 5px;
         left: unset;
         right: 0;
-        width: 55px;
-        height: 55px;
+        width: var(--navigationBarHeight);
+        height: var(--navigationBarHeight);
         opacity: 0;
         z-index: 5;
         cursor: pointer;
@@ -440,7 +434,7 @@ button, a:hover{
     .nav-bar{
         background-color: var(--background-color1);
         position: fixed;
-        top: 55px;
+        top: var(--navigationBarHeight);
         height: 0;
         overflow: hidden;
         width: 100%;
