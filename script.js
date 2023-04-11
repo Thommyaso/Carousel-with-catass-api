@@ -68,17 +68,32 @@ document.addEventListener('DOMContentLoaded', () => {
     allDots[0].classList.add('activeDot')
     
     function activateDot(counter){                          //when slide changes, updates wchich dot should be activated, rest gets disactivated
-        for(z of allDots){
-            z.classList.remove('activeDot')
+        for(dot of allDots){
+            dot.classList.remove('activeDot')
         }
-        if(counter === 0 || counter === carouselDiv.length + 2){
-            allDots[allDots.length-1].classList.add('activeDot')
-        }else if(counter === 1 || counter === carouselDiv.length + 1){
-            allDots[0].classList.add('activeDot')
-        }else{
-            allDots[counter-1].classList.add('activeDot')
+
+        switch(counter){
+            case(0): 
+            case(carouselDiv.length + 2):
+                allDots[allDots.length-1].classList.add('activeDot')
+                break
+            case(counter === 1):
+            case(carouselDiv.length + 1):
+                allDots[0].classList.add('activeDot')
+                break
+            default:
+                console.log()
+                allDots[counter-1].classList.add('activeDot')
         }
     }
+
+    allDots.forEach((element, index)=>{
+        element.addEventListener('click', ()=>{
+            counter = index
+            addAnimation(false)
+
+        })
+    })
 
     function getBrwoserScrollbarWidth(){       //gets a width of browsers scroll-bar( it needs to be used when determinating slide window-size)
         return window.innerWidth - document.documentElement.clientWidth;
@@ -90,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addAnimation = (rev) =>{             //creates animation and updates wchich slide should be shown, also determins wchich dot is shown
         box.classList.add('slideAnimation')
-        if(rev === true){
+        if(rev){
             counter --   
             activateDot(counter)
             box.style.transform = `translateX(${(-size * counter)}px)`
@@ -143,6 +158,16 @@ document.addEventListener('DOMContentLoaded', () => {
             box.style.transform = `translateX(${(-size * counter)}px)`
             runTime(0)
         })
+    })
+
+    carouselDiv.forEach((element) => {
+        element.addEventListener('mouseover', ()=>{
+            clearInterval(interval)
+        })
+        element.addEventListener('mouseout', ()=>{
+            runTime(false)
+        })
+
     })
 
     runTime(false)
