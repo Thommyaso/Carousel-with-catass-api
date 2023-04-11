@@ -126,6 +126,9 @@ button, a:hover{
     padding-left: 2%;
     padding-right: 2%;
     padding-bottom: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
 .button{
@@ -148,6 +151,7 @@ button, a:hover{
 }
 
 .box > *{
+    
     padding-bottom: 12px;
 }
 

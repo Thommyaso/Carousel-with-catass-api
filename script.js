@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const box = document.querySelector('.images')
     const nodes = document.querySelectorAll(".box")
     const carouselDiv = Array.from(nodes)
-    const cloneFirst = nodes[0].cloneNode(true)
-    const cloneLast = nodes[nodes.length-1].cloneNode(true)
+    
     const referBtns = document.querySelectorAll('.btnRefer')
     const indicator = document.querySelector('.dots')
     const INTERVAL_TIME = 4000
@@ -17,14 +16,47 @@ document.addEventListener('DOMContentLoaded', () => {
     box.style.transition ='transform 0.4s ease in'
     box.style.transform = `translateX(${(-size * counter)}px)` //determines which slide is shown (starts form the slide nr1)
 
-    cloneFirst.style.width = `100vw`
-    cloneLast.style.width = `100vw`
-    cloneLast.classList.add('text')
+    const cloneAll = (index) => {       //clonning first and last div and placing them in html to create smooth transition 
+        if(index === carouselDiv.length - 1){
+            const cloneFirst = nodes[0].cloneNode(true)
+            const cloneLast = nodes[nodes.length - 1].cloneNode(true)
+            carouselDiv[carouselDiv.length - 1].after(cloneFirst)
+            carouselDiv[0].before(cloneLast)
+        }
+    }
 
-    carouselDiv[carouselDiv.length-1].after(cloneFirst)
-    carouselDiv[0].before(cloneLast)
-    
-    carouselDiv.forEach((element)=>{
+// Fetch version:
+    /* const getCats = async () => {       //getting image url from the api
+        try{
+          const jsonData = await fetch('https://cataas.com/cat?json=true')
+          const data = await jsonData.json() 
+          return data.url
+        }
+        catch(e){
+          console.log('PROBLEM!!', e)
+        }
+    } */
+
+// Axios version:
+    const getCats = async () => {       //getting image url from the api
+        try{
+          const jsonData = await axios.get('https://cataas.com/cat?json=true')
+          return jsonData.data.url
+        }
+        catch(e){
+          console.log('PROBLEM!!', e)
+        }
+    }
+      
+    carouselDiv.forEach( (element, index) => {
+
+        const setPhoto = async () => {      // setting a random image to each carusel div
+                const photoAdress = await getCats()
+                element.style.backgroundImage = `url('https://cataas.com${photoAdress}')`
+                cloneAll(index) 
+        } // DLACZEGO TA FUNKCJA NIE DZIAŁA GDY WYCIĄGAM JĄ POZA PĘTLĘ .forEach I PRÓBUJĘ JĄ TYLKO PRZYWOŁAĆ W PĘTLI??
+
+        setPhoto()
         element.style.width = `100vw`                          // sets width for all slides
         const dot = document.createElement('div')
         //create navigation dot
@@ -79,23 +111,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    btnLeft.addEventListener('click', ()=>(run(counter <= 0, true)))
-    btnRight.addEventListener('click', ()=>(run(counter > carouselDiv.length, false)))
+    btnLeft.addEventListener('click', () => (run(counter <= 0, true)))
+    btnRight.addEventListener('click', () => (run(counter > carouselDiv.length, false)))
 
-    box.addEventListener('transitionend', ()=>{       //when end of the slides is reached resets the position to first or last clone, depending on direction of animation
+    box.addEventListener('transitionend', () => {       //when end of the slides is reached resets the position to first or last clone, depending on direction of animation
         if(counter === 0){
             box.classList.remove('slideAnimation')
             counter = nodes.length
             box.style.transform = `translateX(${(-size * counter)}px)`
         }else if(counter === carouselDiv.length+1){
-            console.log('im here')
             box.classList.remove('slideAnimation')
             counter = 1
             box.style.transform = `translateX(${(-size * counter)}px)`
         }
     })
 
-    window.addEventListener('resize', ()=>{                 // keeps slides 100vw when resizing browsers window
+    window.addEventListener('resize', () => {                 // keeps slides 100vw when resizing browsers window
         clearInterval(interval)
         box.classList.remove('slideAnimation') 
         size = document.querySelector('html').clientWidth + getBrwoserScrollbarWidth()
@@ -103,11 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
         runTime(0)
     })
 
-    referBtns.forEach((element,index)=>{
-        element.addEventListener('click', ()=>{              // when button is pressed activates 3 slide
+    referBtns.forEach((element, index) => {
+        element.addEventListener('click', () => {              // when button is pressed activates 3 slide
             clearInterval(interval)
             box.classList.add('slideAnimation')
-            counter = index+1
+            counter = index + 1
             activateDot(counter)
             box.style.transform = `translateX(${(-size * counter)}px)`
             runTime(0)
