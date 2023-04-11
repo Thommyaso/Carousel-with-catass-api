@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const btnLeft = document.querySelector('#btnLeft')
     const btnRight = document.querySelector('#btnRight')
-    const box = document.querySelector('.images')
+    const box = document.querySelector('.slides')
     const nodes = document.querySelectorAll(".box")
     const carouselDiv = Array.from(nodes)
     
