@@ -1,0 +1,118 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const btnLeft = document.querySelector('#btnLeft')
+    const btnRight = document.querySelector('#btnRight')
+    const box = document.querySelector('.images')
+    const nodes = document.querySelectorAll(".box")
+    const carouselDiv = Array.from(nodes)
+    const cloneFirst = nodes[0].cloneNode(true)
+    const cloneLast = nodes[nodes.length-1].cloneNode(true)
+    const referBtns = document.querySelectorAll('.btnRefer')
+    const indicator = document.querySelector('.dots')
+    const INTERVAL_TIME = 4000
+    const allDots = []
+    
+    let counter = 1
+    let size = document.querySelector('html').clientWidth + getBrwoserScrollbarWidth()
+
+    box.style.transition ='transform 0.4s ease in'
+    box.style.transform = `translateX(${(-size * counter)}px)` //determines which slide is shown (starts form the slide nr1)
+
+    cloneFirst.style.width = `100vw`
+    cloneLast.style.width = `100vw`
+    cloneLast.classList.add('text')
+
+    carouselDiv[carouselDiv.length-1].after(cloneFirst)
+    carouselDiv[0].before(cloneLast)
+    
+    carouselDiv.forEach((element)=>{
+        element.style.width = `100vw`                          // sets width for all slides
+        const dot = document.createElement('div')
+        //create navigation dot
+        dot.classList.add(`dot`)
+        indicator.append(dot)                                  //creates same number of dots as number of slides (ignoring clones)
+        allDots.push(dot)
+    })
+
+    allDots[0].classList.add('activeDot')
+    
+    function activateDot(counter){                          //when slide changes, updates wchich dot should be activated, rest gets disactivated
+        for(z of allDots){
+            z.classList.remove('activeDot')
+        }
+        if(counter === 0 || counter === carouselDiv.length + 2){
+            allDots[allDots.length-1].classList.add('activeDot')
+        }else if(counter === 1 || counter === carouselDiv.length + 1){
+            allDots[0].classList.add('activeDot')
+        }else{
+            allDots[counter-1].classList.add('activeDot')
+        }
+    }
+
+    function getBrwoserScrollbarWidth(){       //gets a width of browsers scroll-bar( it needs to be used when determinating slide window-size)
+        return window.innerWidth - document.documentElement.clientWidth;
+    }
+
+    const runTime = (rev) => {                        //creates interval         
+        interval = setInterval(()=> addAnimation(rev), INTERVAL_TIME)
+    }
+
+    const addAnimation = (rev) =>{             //creates animation and updates wchich slide should be shown, also determins wchich dot is shown
+        box.classList.add('slideAnimation')
+        if(rev === true){
+            counter --   
+            activateDot(counter)
+            box.style.transform = `translateX(${(-size * counter)}px)`
+        }else{
+            counter ++
+            activateDot(counter)
+            box.style.transform = `translateX(${(-size * counter)}px)`
+        }    
+    }
+
+    const run = (condition, rev)=>{
+        clearInterval(interval)
+        if(condition){
+            return
+        }else{
+            addAnimation(rev)
+            runTime()
+        }
+    }
+
+    btnLeft.addEventListener('click', ()=>(run(counter <= 0, true)))
+    btnRight.addEventListener('click', ()=>(run(counter > carouselDiv.length, false)))
+
+    box.addEventListener('transitionend', ()=>{       //when end of the slides is reached resets the position to first or last clone, depending on direction of animation
+        if(counter === 0){
+            box.classList.remove('slideAnimation')
+            counter = nodes.length
+            box.style.transform = `translateX(${(-size * counter)}px)`
+        }else if(counter === carouselDiv.length+1){
+            console.log('im here')
+            box.classList.remove('slideAnimation')
+            counter = 1
+            box.style.transform = `translateX(${(-size * counter)}px)`
+        }
+    })
+
+    window.addEventListener('resize', ()=>{                 // keeps slides 100vw when resizing browsers window
+        clearInterval(interval)
+        box.classList.remove('slideAnimation') 
+        size = document.querySelector('html').clientWidth + getBrwoserScrollbarWidth()
+        box.style.transform = `translateX(${(-size * counter)}px)`
+        runTime(0)
+    })
+
+    referBtns.forEach((element,index)=>{
+        element.addEventListener('click', ()=>{              // when button is pressed activates 3 slide
+            clearInterval(interval)
+            box.classList.add('slideAnimation')
+            counter = index+1
+            activateDot(counter)
+            box.style.transform = `translateX(${(-size * counter)}px)`
+            runTime(0)
+        })
+    })
+
+    runTime(false)
+})

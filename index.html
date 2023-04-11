@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./styles.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.3.0/css/all.css"/>
+        <title>Document</title>
+    </head>
+    <body id="home" class="body">
+        <div class="menu-wrap">
+            <div class="carousel">Carousel</div>
+            <input type="checkbox" class="toggler">
+            <div class="hamburger">
+                <i class="fa-solid fa-chevron-down arrowTwo"></i>
+            </div>
+            <nav id="nav-bar" class="nav-bar navigation">
+                <ul class="nav-list">
+                    <li class="nav-link first-link"><a class="link"  href="#home">Home</a></li>
+                    <li class="nav-link"><a class="link" href="#middle">Middle</a></li>
+                    <li class="nav-link"><a id="lastlink" class="link" href="#end">Bottom</a></li>
+                </ul>
+            </nav>
+        </div>
+        <header class="wrapper">
+            <button id="btnLeft" class="arrow btnl">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <section class="container">
+                <div class="images">
+                    <div class="a box">
+                        <h1>Example headline.</h1>
+                        <p>Some representative placeholder content for the first slide of the carousel.</p>
+                        <button class="linkBtns button">Sign up today</button>
+                    </div>
+                    <div class="b box">
+                        <h1>Another example headline.</h1>
+                        <p>Some representative placeholder content for the second slide of the carousel.</p>
+                        <button class="linkBtns button">Learn more</button>
+                    </div>
+                    <div class="c box">
+                        <h1>One more for good measure.</h1>
+                        <p>Some representative placeholder content for the third slide of this carousel.</p>
+                        <button class="linkBtns button">Browse gallery</button>
+                    </div>
+                </div>
+            </section>  
+            <button id="btnRight" class="arrow btnr">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <div class="dots">
+            </div>
+        </header>
+        <main id="middle" class="main">
+            <section class="linkTo">
+                <div class="refer firstReferer">
+                    <div class="circle"></div>
+                    <p class="thisP">This paragraph has something written inside of it</p>
+                    <a id="btn1" href="#home" class="btnRefer button">open first slide</a>
+                </div>
+                <div class="refer ">
+                    <div class="circle"></div>
+                    <p class="thisP">This paragraph has something else written inside of it</p>
+                    <a id="btn2" href="#home" class="btnRefer button">open second slide</a>
+                </div>
+                <div class="refer ">
+                    <div class="circle"></div>
+                    <p class="thisP">This paragraph has something different written inside of it as well</p>
+                    <a id="btn3" href="#home" class="btnRefer button">open third slide</a>
+                </div>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div class="square box1">
+                        <div class="insquare">500x500</div>
+                    </div>
+                    <div class="writing area1">
+                        <h1>First featurette heading. It'll blow your mind.</h1>
+                    <p>Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="square box2">
+                        <div class="insquare">500x500</div>
+                    </div>  
+                    <div class="writing area2">
+                        <h1>Oh yeah, it's that good. See for yourself.</h1>
+                        <p>Another featurette? Of course. More placeholder content here to give you an idea 
+                        of how this layout would work with some actual real-world content in place.</p>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="square box1">
+                        <div class="insquare">500x500</div>
+                    </div>
+                    <div class="writing area1">
+                        <h1>And lastly, this one. Checkmate.</h1>
+                        <p>And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better 
+                            view of what this would look like with some actual content. Your content.</p>
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+        <footer id="end" class="foot"></footer>
+        <script src="./script.js"></script>
+    </body>
+</html>
